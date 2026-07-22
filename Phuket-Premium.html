@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phuket Premium — Guide complet | Thaï Malin</title>
+<meta name="description" content="Le guide Phuket de Thaï Malin : quartiers, restaurants et street food, hôtels par budget, carte interactive, itinéraires et budget type par jour.">
+<link rel="canonical" href="https://thaimalin.fr/phuket-premium">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thaï Malin">
+<meta property="og:title" content="Phuket Premium — Guide complet | Thaï Malin">
+<meta property="og:description" content="Quartiers, restaurants, hôtels, carte interactive et itinéraires pour préparer votre voyage à Phuket.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1589394760138-3c76ea9cd75e?q=80&w=1200">
+<meta property="og:url" content="https://thaimalin.fr/phuket-premium">
+<meta property="og:locale" content="fr_FR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Phuket Premium — Guide complet | Thaï Malin">
+<meta name="twitter:description" content="Quartiers, restaurants, hôtels, carte interactive et itinéraires pour préparer votre voyage à Phuket.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1589394760138-3c76ea9cd75e?q=80&w=1200">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>:root{--hero-img:url('https://images.unsplash.com/photo-1589394760138-3c76ea9cd75e?q=80&w=1800');}</style>
+</head>
+<body>
+
+<header>
+<nav>
+<div><strong style="color:#d4af37;font-size:22px">Thaï Malin</strong></div>
+<details class="dest-menu">
+<summary>🌏 Destinations</summary>
+<div class="dest-list">
+<a href="/bangkok-premium">🏯 Bangkok</a>
+<a href="/phuket-premium" class="current">🏝️ Phuket</a>
+<a href="/krabi-premium">🧗 Krabi</a>
+<a href="/koh-samui-premium">🏖️ Koh Samui</a>
+</div>
+</details>
+<button id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks">
+  <span></span><span></span><span></span>
+</button>
+<div id="navLinks">
+<a href="#sites">Sites</a>
+<a href="#quartiers">Quartiers</a>
+<a href="#manger">Restaurants</a>
+<a href="#hotels">Hôtels</a>
+<a href="#budget">Budget</a>
+<a href="#carte">Carte</a>
+<a href="#itineraire">Itinéraires</a>
+</div>
+</nav>
+</header>
+
+<section class="hero">
+<div>
+<h1>Phuket Premium</h1>
+<p>Le guide Premium de Phuket du site Thaï Malin : quartiers, restaurants, hôtels, itinéraires et carte interactive.</p>
+<a class="btn" href="#sites">Découvrir</a>
+</div>
+</section>
+
+<section id="sites">
+<h2>Les incontournables</h2>
+<div class="grid">
+<div class="card"><h3>Big Buddha</h3><p>Statue de 45 m en marbre blanc, vue à 360° sur l'île.</p><p><strong>🎟️ Entrée libre</strong> (dons bienvenus) · <strong>🕒 9h–17h</strong> environ, tous les jours</p><p class="tip">⚠️ Le site a été fermé d'août 2024 à mars 2026 suite à un glissement de terrain, réouvert depuis le 3 mars 2026 — à reconfirmer avant la visite. Épaules et genoux couverts exigés (sarongs gratuits sur place).</p></div>
+<div class="card"><h3>Wat Chalong</h3><p>Le temple bouddhiste le plus important de l'île.</p><p><strong>🎟️ Entrée libre</strong> · <strong>🕒 7h–17h</strong> environ, tous les jours</p><p class="tip">À combiner avec le Big Buddha, à 10 min en voiture.</p></div>
+<div class="card"><h3>Phuket Old Town</h3><p>Maisons sino-portugaises colorées, Thalang Road et ses cafés.</p><p><strong>🎟️ Entrée libre</strong> · <strong>🕒</strong> à parcourir en journée</p><p class="tip">Le dimanche soir, la rue devient piétonne pour le marché nocturne.</p></div>
+<div class="card"><h3>Promthep Cape</h3><p>Le meilleur point de vue de l'île pour le coucher de soleil.</p><p><strong>🎟️ Entrée libre</strong> · <strong>🕒</strong> accessible toute la journée</p><p class="tip">Arriver 30 min avant le coucher du soleil pour une bonne place.</p></div>
+<div class="card"><h3>Sunday Walking Street (Lard Yai)</h3><p>Marché nocturne hebdomadaire, street food locale sur Thalang Road.</p><p><strong>🎟️ Entrée libre</strong> · <strong>🕒 16h–22h, dimanche uniquement</strong></p></div>
+<div class="card"><h3>Îles Phi Phi (excursion à la journée)</h3><p>Plages et falaises calcaires, excursion en bateau depuis Phuket.</p><p><strong>🎟️ environ 1 500–2 500 THB</strong> selon prestataire · <strong>🕒</strong> journée complète</p><p class="tip">Réserver la veille, les bateaux partent tôt le matin.</p></div>
+</div>
+</section>
+
+<section id="quartiers">
+<h2>Quartiers de Phuket</h2>
+<div class="toolbar">
+<input id="districtSearch" type="text" placeholder="Rechercher un quartier...">
+<select id="districtFilter">
+<option value="all">Toutes les catégories</option>
+<option value="culture">Culture</option>
+<option value="shopping">Shopping</option>
+<option value="food">Street Food</option>
+<option value="nightlife">Vie nocturne</option>
+</select>
+</div>
+<div id="districtGrid" class="tag-grid"></div>
+</section>
+
+<section id="transport">
+<h2>Transports</h2>
+<div class="grid">
+<div class="card"><h3>Location de scooter</h3><p>Le plus flexible pour explorer l'île, environ 200–300 THB/jour. Permis international recommandé.</p></div>
+<div class="card"><h3>Songthaew</h3><p>Camionnettes partagées entre les plages et Phuket Town, quelques dizaines de THB.</p></div>
+<div class="card"><h3>Grab & taxi</h3><p>Pratique pour les trajets ponctuels, surtout le soir ou avec des bagages.</p></div>
+<div class="card"><h3>Location de voiture</h3><p>Idéal pour une famille ou un groupe, pratique pour les sites éloignés (Big Buddha, Promthep Cape).</p></div>
+</div>
+</section>
+
+<section id="hotels">
+<h2>Sélection d'hôtels</h2>
+<div class="grid">
+<div class="card"><h3>Économique</h3><p>Hôtels simples à Patong, Kata ou Karon • auberges à Phuket Old Town.</p><p><strong>💰 environ 700–1 500 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Phuket&nflt=class%3D2" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+<div class="card"><h3>Confort</h3><p>Centara Kata Resort • Cape Sienna Phuket • Holiday Inn Resort Patong.</p><p><strong>💰 environ 1 500–3 500 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Phuket&nflt=class%3D3" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+<div class="card"><h3>Premium</h3><p>The Nai Harn • Banyan Tree Phuket.</p><p><strong>💰 environ 4 000–8 000 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Phuket&nflt=class%3D4" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+<div class="card"><h3>Luxe</h3><p>Trisara • Amanpuri • Keemala.</p><p><strong>💰 à partir de 12 000 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Phuket&nflt=class%3D5" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+</div>
+<p><small>Prix à titre indicatif, à confirmer au moment de la réservation.</small></p>
+</section>
+
+<section id="budget">
+<h2>Budget type par jour</h2>
+<div class="grid">
+<div class="card"><h3>🎒 Petit budget — environ 1 300–2 000 THB/jour</h3><p>Hôtel économique, street food et marchés nocturnes, songthaew, scooter en location partagée.</p></div>
+<div class="card"><h3>🧳 Budget moyen — environ 2 800–4 500 THB/jour</h3><p>Hôtel confort, un restaurant gastronomique ou un rooftop dans la journée, scooter ou Grab, une excursion incluse.</p></div>
+<div class="card"><h3>💼 Budget élevé — à partir de 7 000 THB/jour</h3><p>Hôtel premium/luxe, gastronomie et rooftops réguliers, voiture avec chauffeur, excursions à la journée (Phi Phi, îles).</p></div>
+</div>
+<p><small>Estimations pour une personne, hors billet d'avion. Le taux de change THB/EUR varie — à vérifier avant de partir.</small></p>
+</section>
+
+<section id="manger">
+<h2>Restaurants & Street Food</h2>
+<div class="toolbar" id="restToolbar">
+<button data-cat="all" class="active">Tous</button>
+<button data-cat="street">Street Food</button>
+<button data-cat="gastro">Gastronomique</button>
+<button data-cat="rooftop">Rooftop</button>
+<button data-cat="cafe">Café</button>
+</div>
+<div id="restGrid" class="rest-grid"></div>
+</section>
+
+<section id="carte">
+<h2>Carte interactive des restaurants</h2>
+<p>Marqueurs colorés par catégorie, regroupement automatique au dézoom, itinéraire depuis votre position.</p>
+<div class="toolbar">
+<button data-mapcat="all" class="active">Tous</button>
+<button data-mapcat="street">Street Food</button>
+<button data-mapcat="gastro">Gastronomique</button>
+<button data-mapcat="rooftop">Rooftop</button>
+<button data-mapcat="cafe">Café</button>
+</div>
+<div id="leafletMap"></div>
+<p><small>Coordonnées GPS estimées par zone (pas de métro sur l'île) — à vérifier avant publication.</small></p>
+</section>
+
+<section id="itineraire">
+<h2>Itinéraires recommandés</h2>
+<div class="timeline">
+<h3>2 jours</h3><p>Jour 1 : Big Buddha, Wat Chalong, Promthep Cape (coucher de soleil). Jour 2 : Phuket Old Town, marché du dimanche si possible.</p>
+<h3>3 jours</h3><p>Ajoute une journée plage à Kata/Karon ou Bang Tao et un rooftop en soirée.</p>
+<h3>5 jours</h3><p>Inclure une excursion aux îles Phi Phi et une soirée à Patong.</p>
+<h3>7 jours</h3><p>Découverte approfondie : Kamala, Rawai, Nai Harn et les cafés de Old Town au rythme d'un digital nomade.</p>
+</div>
+</section>
+
+<section>
+<h2>Roadmap d'enrichissement</h2>
+<div class="grid">
+<div class="card"><h3>Phase 1</h3><p>Remplacer les photos Unsplash génériques par de vraies photos de chaque établissement (prises sur place ou fournies par les restaurants).</p></div>
+<div class="card"><h3>Phase 2</h3><p>Vérifier et affiner les coordonnées GPS estimées, brancher de vrais liens de réservation pour les restaurants (les hôtels ont désormais un lien Booking.com).</p></div>
+<div class="card"><h3>Phase 3</h3><p>Réutiliser cette structure pour Krabi, Chiang Mai, Koh Samui et les autres destinations.</p></div>
+</div>
+</section>
+
+<footer>
+<h2>Thaï Malin</h2>
+<p>Phuket Premium — fichier maître</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script>
+window.THAIMALIN_CONFIG = {
+  citySlug: "phuket",
+  cityLabel: "Phuket",
+  mapCenter: [7.9519, 98.3381],
+  mapZoom: 11,
+  locationField: "zone",
+  locationIcon: "📍"
+};
+</script>
+<script src="assets/app.js"></script>
+</body>
+</html>
