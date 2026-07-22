@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bangkok Premium — Guide complet | Thaï Malin</title>
+<meta name="description" content="Le guide Bangkok de Thaï Malin : quartiers, restaurants et street food, hôtels par budget, carte interactive, itinéraires 2 à 7 jours et budget type par jour.">
+<link rel="canonical" href="https://thaimalin.fr/bangkok-premium">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thaï Malin">
+<meta property="og:title" content="Bangkok Premium — Guide complet | Thaï Malin">
+<meta property="og:description" content="Quartiers, restaurants, hôtels, carte interactive et itinéraires pour préparer votre voyage à Bangkok.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1200">
+<meta property="og:url" content="https://thaimalin.fr/bangkok-premium">
+<meta property="og:locale" content="fr_FR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bangkok Premium — Guide complet | Thaï Malin">
+<meta name="twitter:description" content="Quartiers, restaurants, hôtels, carte interactive et itinéraires pour préparer votre voyage à Bangkok.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1200">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css">
+<style>
+:root{
+  --gold:#d4af37;--dark:#11151b;--card:#1d232c;--light:#f5f5f5;
+  --street:#e8983b;--rooftop:#9b59b6;--cafe:#3d8bd4;--gastro:#c0392b;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--dark);color:#fff;line-height:1.6}
+header{position:sticky;top:0;background:rgba(10,10,10,.95);padding:14px 20px;z-index:1000}
+nav{max-width:1300px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px;position:relative}
+nav a{color:#fff;text-decoration:none;margin-left:18px;padding:6px 0}
+#navToggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;background:transparent;border:1px solid #444;border-radius:10px;cursor:pointer}
+#navToggle span{display:block;width:22px;height:2px;background:#fff;margin:0 auto}
+#navLinks{display:flex}
+.hero{
+  height:80vh;min-height:480px;
+  display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;
+  background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.65)),
+  url('https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1800') center/cover;
+}
+.hero h1{font-size:56px;margin:0}
+.hero p{max-width:850px;font-size:20px;margin:20px auto}
+.btn{display:inline-block;background:var(--gold);color:#000;padding:16px 34px;border-radius:40px;text-decoration:none;font-weight:bold;border:none;cursor:pointer;font-size:15px}
+section{max-width:1300px;margin:auto;padding:60px 20px}
+h2{color:var(--gold);font-size:34px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.card{background:var(--card);padding:24px;border-radius:18px;border:1px solid #333;transition:transform .25s ease, box-shadow .25s ease}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,.25)}
+.card h3{margin-top:0;color:var(--gold)}
+.timeline{border-left:4px solid var(--gold);padding-left:20px}
+.timeline h3{color:var(--gold);margin-bottom:4px}
+footer{background:#090909;text-align:center;padding:40px;margin-top:20px}
+small{color:#bbb}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0;-webkit-overflow-scrolling:touch}
+.toolbar input,.toolbar select{padding:14px;border-radius:10px;border:1px solid #555;background:var(--card);color:#fff;font-size:16px}
+.toolbar input{flex:1;min-width:220px}
+.toolbar button{padding:12px 20px;border-radius:20px;border:1px solid var(--gold);background:transparent;color:#fff;cursor:pointer;font-size:15px;min-height:44px}
+.toolbar button.active{background:var(--gold);color:#000;font-weight:bold}
+.tag-grid,.rest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.tile{background:var(--card);border-radius:18px;overflow:hidden;border:1px solid #333;transition:transform .25s ease}
+.tile:hover{transform:translateY(-4px)}
+.tile img{width:100%;height:190px;object-fit:cover;display:block}
+.tile .body{padding:20px}
+.tile h3{color:var(--gold);margin:0 0 8px}
+.badge{display:inline-block;font-size:12px;padding:4px 10px;border-radius:12px;font-weight:bold;color:#000}
+.b-street{background:var(--street)}.b-rooftop{background:var(--rooftop);color:#fff}.b-cafe{background:var(--cafe);color:#fff}.b-gastro{background:var(--gastro);color:#fff}
+.tile p{margin:6px 0;font-size:14px}
+.tile .tip{color:#ddd;font-style:italic}
+.fav-btn{margin-top:10px;padding:8px 14px;border-radius:14px;border:1px solid var(--gold);background:transparent;color:#fff;cursor:pointer}
+.fav-btn.on{background:var(--gold);color:#000;font-weight:bold}
+#leafletMap{height:550px;max-height:70vh;border-radius:16px}
+.fav-btn{min-height:44px}
+a.btn, .btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+
+@media(max-width:820px){
+  #navToggle{display:flex}
+  #navLinks{
+    display:none;
+    position:absolute;top:calc(100% + 10px);right:0;left:0;
+    background:#0d0d0d;border:1px solid #333;border-radius:14px;
+    flex-direction:column;padding:10px;gap:2px;
+  }
+  #navLinks.open{display:flex}
+  nav a{margin-left:0;padding:14px 10px;border-radius:8px}
+  nav a:active{background:#1d232c}
+}
+
+@media(max-width:700px){
+  h2{font-size:26px!important}
+  .hero{height:70vh;min-height:400px}
+  .hero h1{font-size:34px}
+  .hero p{font-size:16px}
+  section{padding:40px 16px}
+  #leafletMap{height:60vh;max-height:420px}
+  .tile img{height:160px}
+  .toolbar{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px}
+  .toolbar button{flex:0 0 auto}
+}
+</style>
+</head>
+<body>
+
+<header>
+<nav>
+<div><strong style="color:#d4af37;font-size:22px">Thaï Malin</strong></div>
+<button id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks">
+  <span></span><span></span><span></span>
+</button>
+<div id="navLinks">
+<a href="#sites">Sites</a>
+<a href="#quartiers">Quartiers</a>
+<a href="#manger">Restaurants</a>
+<a href="#hotels">Hôtels</a>
+<a href="#budget">Budget</a>
+<a href="#carte">Carte</a>
+<a href="#itineraire">Itinéraires</a>
+</div>
+</nav>
+</header>
+
+<section class="hero">
+<div>
+<h1>Bangkok Premium</h1>
+<p>Le guide Premium de Bangkok du site Thaï Malin : quartiers, restaurants, hôtels, itinéraires et carte interactive.</p>
+<a class="btn" href="#sites">Découvrir</a>
+</div>
+</section>
+
+<section id="sites">
+<h2>Les incontournables</h2>
+<div class="grid">
+<div class="card"><h3>Grand Palace</h3><p>Résidence royale historique et Temple du Bouddha d'Émeraude.</p><p><strong>🎟️ 500 THB</strong> · <strong>🕒 8h30–15h30</strong> (dernière entrée), tous les jours</p><p class="tip">Tenue correcte exigée (épaules et genoux couverts).</p></div>
+<div class="card"><h3>Wat Pho</h3><p>Bouddha couché de 46 mètres et massage traditionnel thaï.</p><p><strong>🎟️ 300 THB</strong> · <strong>🕒 8h–18h30</strong>, tous les jours</p><p class="tip">Juste à côté du Grand Palace, à faire à la suite.</p></div>
+<div class="card"><h3>Wat Arun</h3><p>Le Temple de l'Aube, meilleur au coucher du soleil.</p><p><strong>🎟️ 200 THB</strong> · <strong>🕒 8h–18h</strong>, tous les jours</p><p class="tip">Accessible en 3 min de ferry depuis Tha Tien Pier (3-5 THB).</p></div>
+<div class="card"><h3>Chinatown</h3><p>Street food, marchés et ambiance nocturne.</p><p><strong>🎟️ Entrée libre</strong> · <strong>🕒</strong> animé surtout en soirée</p></div>
+<div class="card"><h3>ICONSIAM</h3><p>Shopping haut de gamme et restaurants.</p><p><strong>🎟️ Entrée libre</strong> · <strong>🕒 10h–22h</strong> environ</p></div>
+<div class="card"><h3>Mahanakhon SkyWalk</h3><p>Vue panoramique à 314 m, sol en verre au 78e étage.</p><p><strong>🎟️ à partir de 880 THB</strong> · <strong>🕒 10h–19h</strong> environ</p><p class="tip">Idéal 1h avant le coucher du soleil.</p></div>
+</div>
+</section>
+
+<section id="quartiers">
+<h2>Quartiers de Bangkok</h2>
+<div class="toolbar">
+<input id="districtSearch" type="text" placeholder="Rechercher un quartier...">
+<select id="districtFilter">
+<option value="all">Toutes les catégories</option>
+<option value="culture">Culture</option>
+<option value="shopping">Shopping</option>
+<option value="food">Street Food</option>
+<option value="nightlife">Vie nocturne</option>
+</select>
+</div>
+<div id="districtGrid" class="tag-grid"></div>
+</section>
+
+<section id="transport">
+<h2>Transports</h2>
+<div class="grid">
+<div class="card"><h3>BTS Skytrain</h3><p>Rapide pour Sukhumvit, Siam et Silom.</p></div>
+<div class="card"><h3>MRT</h3><p>Pratique pour Chinatown et les correspondances.</p></div>
+<div class="card"><h3>Bateaux</h3><p>Idéal pour les temples du Chao Phraya.</p></div>
+<div class="card"><h3>Grab & Taxi</h3><p>À privilégier pour les trajets directs.</p></div>
+</div>
+</section>
+
+<section id="hotels">
+<h2>Sélection d'hôtels</h2>
+<div class="grid">
+<div class="card"><h3>Économique</h3><p>Lub d Bangkok • ibis Styles Bangkok Silom • The Quarter.</p><p><strong>💰 environ 800–1 500 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Bangkok&nflt=class%3D2" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+<div class="card"><h3>Confort</h3><p>Amara Bangkok • Eastin Grand Phayathai • ASAI.</p><p><strong>💰 environ 1 500–3 000 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Bangkok&nflt=class%3D3" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+<div class="card"><h3>Premium</h3><p>Grande Centre Point Surawong • SO/ Bangkok.</p><p><strong>💰 environ 3 000–6 000 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Bangkok&nflt=class%3D4" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+<div class="card"><h3>Luxe</h3><p>Mandarin Oriental • Capella • The Peninsula.</p><p><strong>💰 à partir de 8 000 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Bangkok&nflt=class%3D5" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+</div>
+<p><small>Prix à titre indicatif, à confirmer au moment de la réservation.</small></p>
+</section>
+
+<section id="budget">
+<h2>Budget type par jour</h2>
+<div class="grid">
+<div class="card"><h3>🎒 Petit budget — environ 1 200–1 800 THB/jour</h3><p>Hôtel économique, street food (Thipsamai, Nai Ek), transport en BTS/MRT, un temple par jour.</p></div>
+<div class="card"><h3>🧳 Budget moyen — environ 2 500–4 000 THB/jour</h3><p>Hôtel confort, un restaurant gastronomique ou un rooftop dans la journée, Grab occasionnel, entrées aux sites inclus.</p></div>
+<div class="card"><h3>💼 Budget élevé — à partir de 6 000 THB/jour</h3><p>Hôtel premium/luxe, rooftop et gastronomie réguliers, Grab/taxi pour tous les trajets, activités et excursions.</p></div>
+</div>
+<p><small>Estimations pour une personne, hors billet d'avion. Le taux de change THB/EUR varie — à vérifier avant de partir.</small></p>
+</section>
+
+<section id="manger">
+<h2>Restaurants & Street Food</h2>
+<div class="toolbar" id="restToolbar">
+<button data-cat="all" class="active">Tous</button>
+<button data-cat="street">Street Food</button>
+<button data-cat="gastro">Gastronomique</button>
+<button data-cat="rooftop">Rooftop</button>
+<button data-cat="cafe">Café</button>
+</div>
+<div id="restGrid" class="rest-grid"></div>
+</section>
+
+<section id="carte">
+<h2>Carte interactive des restaurants</h2>
+<p>Marqueurs colorés par catégorie, regroupement automatique au dézoom, itinéraire depuis votre position.</p>
+<div class="toolbar">
+<button data-mapcat="all" class="active">Tous</button>
+<button data-mapcat="street">Street Food</button>
+<button data-mapcat="gastro">Gastronomique</button>
+<button data-mapcat="rooftop">Rooftop</button>
+<button data-mapcat="cafe">Café</button>
+</div>
+<div id="leafletMap"></div>
+<p><small>Coordonnées GPS estimées pour les adresses sans station de métro indiquée — à vérifier avant publication.</small></p>
+</section>
+
+<section id="itineraire">
+<h2>Itinéraires recommandés</h2>
+<div class="timeline">
+<h3>2 jours</h3><p>Jour 1 : Grand Palace, Wat Pho, Wat Arun. Jour 2 : Siam, ICONSIAM, rooftop.</p>
+<h3>3 jours</h3><p>Ajoute Chinatown et une croisière sur le Chao Phraya.</p>
+<h3>5 jours</h3><p>Inclure Ari, Lumpini, marchés et cafés.</p>
+<h3>7 jours</h3><p>Découverte approfondie avec excursions urbaines et quartiers moins connus.</p>
+</div>
+</section>
+
+<section>
+<h2>Roadmap d'enrichissement</h2>
+<div class="grid">
+<div class="card"><h3>Phase 1</h3><p>Remplacer les photos Unsplash génériques par de vraies photos de chaque établissement (prises sur place ou fournies par les restaurants).</p></div>
+<div class="card"><h3>Phase 2</h3><p>Vérifier et affiner les coordonnées GPS estimées, brancher de vrais liens de réservation pour les restaurants (les hôtels ont désormais un lien Booking.com).</p></div>
+<div class="card"><h3>Phase 3</h3><p>Réutiliser cette structure pour Phuket, Krabi, Chiang Mai, Koh Samui et les autres destinations.</p></div>
+</div>
+</section>
+
+<footer>
+<h2>Thaï Malin</h2>
+<p>Bangkok Premium — fichier maître</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script>
+/* ===================== DONNÉES ===================== */
+
+/* Les données sont maintenant dans des fichiers séparés :
+   - bangkok-districts.json
+   - bangkok-restaurants.json (coord=true -> position confirmée par une station de métro ; sinon estimation à vérifier)
+   Ils doivent être déposés à côté de ce fichier HTML sur le serveur. */
+let districts = [];
+let restaurants = [];
+
+async function loadData(){
+  try {
+    const [dRes, rRes] = await Promise.all([
+      fetch('bangkok-districts.json'),
+      fetch('bangkok-restaurants.json')
+    ]);
+    if(!dRes.ok || !rRes.ok) throw new Error('Fichier JSON introuvable');
+    districts = await dRes.json();
+    restaurants = await rRes.json();
+  } catch(e){
+    console.error('Erreur de chargement des données Bangkok :', e);
+    document.body.insertAdjacentHTML('afterbegin',
+      '<div style="background:#c0392b;color:#fff;padding:14px;text-align:center">'
+      + 'Impossible de charger les données (bangkok-districts.json / bangkok-restaurants.json). '
+      + 'Vérifiez qu\'elles sont bien à côté de ce fichier HTML et que la page est servie en http(s), pas ouverte en local.</div>');
+  }
+  renderDistricts();
+  renderRestaurants('all');
+  initMap();
+}
+
+const catLabel = {street:"Street Food",gastro:"Gastronomique",rooftop:"Rooftop",cafe:"Café"};
+const catColor = {street:"#e8983b",gastro:"#c0392b",rooftop:"#9b59b6",cafe:"#3d8bd4"};
+
+/* ===================== NAV MOBILE ===================== */
+
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+
+navToggle.addEventListener('click', ()=>{
+  const isOpen = navLinks.classList.toggle('open');
+  navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
+navLinks.querySelectorAll('a').forEach(link=>{
+  link.addEventListener('click', ()=>{
+    navLinks.classList.remove('open');
+    navToggle.setAttribute('aria-expanded','false');
+  });
+});
+
+/* ===================== QUARTIERS ===================== */
+
+const districtGrid = document.getElementById('districtGrid');
+const districtSearch = document.getElementById('districtSearch');
+const districtFilter = document.getElementById('districtFilter');
+
+function renderDistricts(){
+  const q = districtSearch.value.toLowerCase();
+  const cat = districtFilter.value;
+  districtGrid.innerHTML = districts
+    .filter(d => d.name.toLowerCase().includes(q) && (cat==='all' || d.cat===cat))
+    .map(d => `
+      <article class="tile">
+        <img src="${d.img}" alt="${d.emoji} ${d.name}">
+        <div class="body">
+          <h3>${d.emoji} ${d.name}</h3>
+          <p>${d.desc}</p>
+          <p><strong>Attractions :</strong> ${d.attractions}</p>
+          <p><strong>Restaurant conseillé :</strong> ${d.restaurant}</p>
+          <p><strong>Hôtel conseillé :</strong> ${d.hotel}</p>
+          <p class="tip">${d.tip}</p>
+        </div>
+      </article>
+    `).join('');
+}
+districtSearch.addEventListener('input', renderDistricts);
+districtFilter.addEventListener('change', renderDistricts);
+
+/* ===================== FICHES RESTAURANTS ===================== */
+
+const restGrid = document.getElementById('restGrid');
+const restToolbar = document.getElementById('restToolbar');
+const FAV_KEY = 'thaimalin_favorites_bangkok';
+let favorites;
+try {
+  favorites = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+} catch(e) {
+  favorites = new Set(); // localStorage indisponible (aperçu isolé, navigation privée...) : favoris en mémoire uniquement
+}
+
+function saveFavorites(){
+  try { localStorage.setItem(FAV_KEY, JSON.stringify([...favorites])); }
+  catch(e) { /* stockage indisponible, on continue en mémoire */ }
+}
+
+function renderRestaurants(cat){
+  const list = restaurants.filter(r => cat==='all' || r.cat===cat);
+  restGrid.innerHTML = list.map(r => `
+    <article class="tile" data-name="${r.name}">
+      <img src="${r.img}" alt="${r.name}">
+      <div class="body">
+        <span class="badge b-${r.cat}">${catLabel[r.cat]}</span>
+        <h3>${r.name}</h3>
+        <p>${r.desc}</p>
+        <p><strong>Prix :</strong> ${r.price} · <strong>Horaires :</strong> ${r.hours}</p>
+        <p><strong>⭐ Note Thaï Malin :</strong> ${r.note} · <strong>🚆</strong> ${r.station}</p>
+        <p class="tip">${r.tip}</p>
+        <button class="fav-btn" onclick="toggleFav(this,'${r.name.replace(/'/g,"\\'")}')">☆ Ajouter aux favoris</button>
+      </div>
+    </article>
+  `).join('');
+  syncFavButtons();
+}
+
+function toggleFav(btn, name){
+  if(favorites.has(name)){ favorites.delete(name); }
+  else{ favorites.add(name); }
+  saveFavorites();
+  syncFavButtons();
+}
+
+function syncFavButtons(){
+  document.querySelectorAll('.fav-btn').forEach(btn=>{
+    const name = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+    if(favorites.has(name)){ btn.classList.add('on'); btn.innerHTML='★ Ajouté aux favoris'; }
+    else{ btn.classList.remove('on'); btn.innerHTML='☆ Ajouter aux favoris'; }
+  });
+}
+
+restToolbar.addEventListener('click', e=>{
+  if(e.target.tagName!=='BUTTON') return;
+  restToolbar.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');
+  renderRestaurants(e.target.dataset.cat);
+});
+
+/* ===================== CARTE INTERACTIVE ===================== */
+
+let map, clusterGroup, routeControl, userMarker;
+
+function initMap(){
+  if(typeof L === 'undefined') return;
+
+  map = L.map('leafletMap').setView([13.7563,100.5018], 12);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  clusterGroup = L.markerClusterGroup({
+    showCoverageOnHover: false,
+    spiderfyOnMaxZoom: true,
+    zoomToBoundsOnClick: true,
+    maxClusterRadius: 60
+  });
+
+  renderMapMarkers('all');
+  map.addLayer(clusterGroup);
+
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(pos=>{
+      const {latitude, longitude} = pos.coords;
+      userMarker = L.circleMarker([latitude, longitude], {color:'#fff', fillColor:'#1e88e5', fillOpacity:1})
+        .addTo(map).bindPopup('Votre position');
+    });
+  }
+}
+
+function popupHTML(r){
+  return `
+    <strong>${r.name}</strong><br>
+    ${catLabel[r.cat]} · ${r.price}<br>
+    ⭐ ${r.note} · 🚆 ${r.station}<br>
+    🍽️ ${r.spec}<br><br>
+    <button onclick="startRouteTo(${r.lat},${r.lng})">🧭 Itinéraire</button>
+  `;
+}
+
+function renderMapMarkers(cat){
+  if(!clusterGroup) return;
+  clusterGroup.clearLayers();
+  restaurants
+    .filter(r => cat==='all' || r.cat===cat)
+    .forEach(r=>{
+      const icon = L.divIcon({
+        className:'',
+        html:`<div style="background:${catColor[r.cat]};width:16px;height:16px;border-radius:50%;border:2px solid white;"></div>`,
+        iconSize:[16,16]
+      });
+      const marker = L.marker([r.lat, r.lng], {icon});
+      marker.bindPopup(popupHTML(r));
+      clusterGroup.addLayer(marker);
+    });
+}
+
+function startRouteTo(lat,lng){
+  if(!navigator.geolocation){ alert("La géolocalisation n'est pas disponible."); return; }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    if(routeControl){ map.removeControl(routeControl); }
+    routeControl = L.Routing.control({
+      waypoints: [
+        L.latLng(pos.coords.latitude, pos.coords.longitude),
+        L.latLng(lat, lng)
+      ],
+      routeWhileDragging:false,
+      show:true,
+      addWaypoints:false,
+      draggableWaypoints:false,
+      fitSelectedRoutes:true
+    }).addTo(map);
+  }, err=>{
+    alert("Impossible d'obtenir votre position : "+err.message);
+  });
+}
+
+document.querySelectorAll('#carte .toolbar button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('#carte .toolbar button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderMapMarkers(btn.dataset.mapcat);
+  });
+});
+
+document.addEventListener('DOMContentLoaded', loadData);
+window.addEventListener('resize', ()=>{ if(map){ map.invalidateSize(); } });
+</script>
+</body>
+</html>
