@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bangkok Premium — Guide complet | Thaï Malin</title>
+<meta name="description" content="Le guide Bangkok de Thaï Malin : quartiers, restaurants et street food, hôtels par budget, carte interactive, itinéraires 2 à 7 jours et budget type par jour.">
+<link rel="canonical" href="https://thaimalin.fr/bangkok-premium">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thaï Malin">
+<meta property="og:title" content="Bangkok Premium — Guide complet | Thaï Malin">
+<meta property="og:description" content="Quartiers, restaurants, hôtels, carte interactive et itinéraires pour préparer votre voyage à Bangkok.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1200">
+<meta property="og:url" content="https://thaimalin.fr/bangkok-premium">
+<meta property="og:locale" content="fr_FR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bangkok Premium — Guide complet | Thaï Malin">
+<meta name="twitter:description" content="Quartiers, restaurants, hôtels, carte interactive et itinéraires pour préparer votre voyage à Bangkok.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1200">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css">
+<link rel="stylesheet" href="assets/style.css">
+<style>:root{--hero-img:url('https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=1800');}</style>
+</head>
+<body>
+
+<header>
+<nav>
+<div><strong style="color:#d4af37;font-size:22px">Thaï Malin</strong></div>
+<details class="dest-menu">
+<summary>🌏 Destinations</summary>
+<div class="dest-list">
+<a href="/bangkok-premium" class="current">🏯 Bangkok</a>
+<a href="/phuket-premium">🏝️ Phuket</a>
+<a href="/krabi-premium">🧗 Krabi</a>
+<a href="/koh-samui-premium">🏖️ Koh Samui</a>
+</div>
+</details>
+<button id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navLinks">
+  <span></span><span></span><span></span>
+</button>
+<div id="navLinks">
+<a href="#sites">Sites</a>
+<a href="#quartiers">Quartiers</a>
+<a href="#manger">Restaurants</a>
+<a href="#hotels">Hôtels</a>
+<a href="#budget">Budget</a>
+<a href="#carte">Carte</a>
+<a href="#itineraire">Itinéraires</a>
+</div>
+</nav>
+</header>
+
+<section class="hero">
+<div>
+<h1>Bangkok Premium</h1>
+<p>Le guide Premium de Bangkok du site Thaï Malin : quartiers, restaurants, hôtels, itinéraires et carte interactive.</p>
+<a class="btn" href="#sites">Découvrir</a>
+</div>
+</section>
+
+<section id="sites">
+<h2>Les incontournables</h2>
+<div class="grid">
+<div class="card"><h3>Grand Palace</h3><p>Résidence royale historique et Temple du Bouddha d'Émeraude.</p><p><strong>🎟️ 500 THB</strong> · <strong>🕒 8h30–15h30</strong> (dernière entrée), tous les jours</p><p class="tip">Tenue correcte exigée (épaules et genoux couverts).</p></div>
+<div class="card"><h3>Wat Pho</h3><p>Bouddha couché de 46 mètres et massage traditionnel thaï.</p><p><strong>🎟️ 300 THB</strong> · <strong>🕒 8h–18h30</strong>, tous les jours</p><p class="tip">Juste à côté du Grand Palace, à faire à la suite.</p></div>
+<div class="card"><h3>Wat Arun</h3><p>Le Temple de l'Aube, meilleur au coucher du soleil.</p><p><strong>🎟️ 200 THB</strong> · <strong>🕒 8h–18h</strong>, tous les jours</p><p class="tip">Accessible en 3 min de ferry depuis Tha Tien Pier (3-5 THB).</p></div>
+<div class="card"><h3>Chinatown</h3><p>Street food, marchés et ambiance nocturne.</p><p><strong>🎟️ Entrée libre</strong> · <strong>🕒</strong> animé surtout en soirée</p></div>
+<div class="card"><h3>ICONSIAM</h3><p>Shopping haut de gamme et restaurants.</p><p><strong>🎟️ Entrée libre</strong> · <strong>🕒 10h–22h</strong> environ</p></div>
+<div class="card"><h3>Mahanakhon SkyWalk</h3><p>Vue panoramique à 314 m, sol en verre au 78e étage.</p><p><strong>🎟️ à partir de 880 THB</strong> · <strong>🕒 10h–19h</strong> environ</p><p class="tip">Idéal 1h avant le coucher du soleil.</p></div>
+</div>
+</section>
+
+<section id="quartiers">
+<h2>Quartiers de Bangkok</h2>
+<div class="toolbar">
+<input id="districtSearch" type="text" placeholder="Rechercher un quartier...">
+<select id="districtFilter">
+<option value="all">Toutes les catégories</option>
+<option value="culture">Culture</option>
+<option value="shopping">Shopping</option>
+<option value="food">Street Food</option>
+<option value="nightlife">Vie nocturne</option>
+</select>
+</div>
+<div id="districtGrid" class="tag-grid"></div>
+</section>
+
+<section id="transport">
+<h2>Transports</h2>
+<div class="grid">
+
+<div class="card">
+<h3>🚆 BTS Skytrain</h3>
+<p>Le moyen le plus rapide pour Sukhumvit, Siam et Silom, au-dessus des embouteillages.</p>
+<p><strong>💰 Prix :</strong> 17 à 65 THB selon la distance</p>
+<p><strong>🕒 Horaires :</strong> environ 5h30–00h00</p>
+<p class="tip">Prends une carte Rabbit rechargeable pour éviter la file aux distributeurs ; un pass journée à 150 THB est rentable si tu multiplies les trajets.</p>
+<p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.bts.co.th" target="_blank" rel="noopener">Voir la carte du réseau</a></p>
+</div>
+
+<div class="card">
+<h3>🚇 MRT</h3>
+<p>Pratique pour Chinatown, Sanam Chai (Grand Palace) et les correspondances avec le BTS.</p>
+<p><strong>💰 Tarifs :</strong> 16 à 42 THB selon la distance</p>
+<p><strong>🕒 Horaires :</strong> environ 6h00–00h00</p>
+<p class="tip">Correspondance avec le BTS aux stations Sukhumvit/Asok, Chatuchak Park/Mo Chit et Si Lom/Sala Daeng — mais attention, c'est un réseau de tickets séparé, il faut donc racheter un titre de transport à chaque changement.</p>
+<p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.bangkokmetro.co.th" target="_blank" rel="noopener">Voir la carte du réseau</a></p>
+</div>
+
+<div class="card">
+<h3>🚤 Bateaux (Chao Phraya Express Boat)</h3>
+<p>La meilleure façon de rejoindre les temples en longeant le fleuve, loin de la circulation.</p>
+<p><strong>🛕 Quels embarcadères pour quels temples :</strong></p>
+<p>N9 Tha Chang → Grand Palace & Wat Phra Kaew · N8 Tha Tien → Wat Pho (+ ferry vers Wat Arun juste en face) · N13 Phra Arthit → Khao San Road</p>
+<p><strong>💰 Prix :</strong> bateau local (drapeau de couleur) 16 à 32 THB · bateau touristique (drapeau bleu) 40 THB le trajet ou pass journée environ 150–180 THB</p>
+<p><strong>🕒 Horaires :</strong> bateau touristique environ 8h30–19h45 · bateaux locaux selon leur drapeau, plutôt aux heures de pointe</p>
+<p class="tip">Le bateau touristique (drapeau bleu) est plus simple pour un premier passage : commentaires en anglais et arrêts aux principaux sites.</p>
+<p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.chaophrayaexpressboat.com" target="_blank" rel="noopener">Voir la carte des lignes</a></p>
+</div>
+
+<div class="card">
+<h3>🚕 Grab & Taxi</h3>
+<p>À privilégier pour les trajets directs, surtout en soirée ou avec des bagages.</p>
+<p><strong>💰 Prix moyens :</strong> taxi au compteur, prise en charge environ 35 THB + trajet · Grab souvent 80–150 THB pour un trajet en centre-ville</p>
+<p class="tip">En taxi classique, exige toujours le compteur ("meter please") — si le chauffeur refuse, prends-en simplement un autre. Grab affiche le prix à l'avance et se paie en espèces ou par carte enregistrée dans l'appli.</p>
+<p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.grab.com/th/en/download/" target="_blank" rel="noopener">Télécharger Grab</a></p>
+</div>
+
+<div class="card">
+<h3>🚍 Bus</h3>
+<p>Le moyen le moins cher, utile pour les trajets non desservis par le BTS/MRT ou sur de longues distances.</p>
+<p><strong>💰 Tarifs :</strong> environ 8 à 25 THB selon que le bus est climatisé ou non</p>
+<p class="tip">Trajet et numéros de ligne pas toujours évidents pour un visiteur — une application de suivi en temps réel simplifie beaucoup les choses.</p>
+<p><strong>📱 Application recommandée :</strong> ViaBus</p>
+</div>
+
+<div class="card">
+<h3>🚆 Airport Rail Link</h3>
+<p>Depuis l'aéroport Suvarnabhumi, la City Line relie directement le centre-ville.</p>
+<p><strong>💰 Prix :</strong> 15 à 45 THB selon la distance</p>
+<p><strong>⏱️ Temps de trajet :</strong> environ 30 minutes jusqu'à Phaya Thai</p>
+<p><strong>🔁 Correspondance BTS :</strong> station Phaya Thai (Sukhumvit Line)</p>
+<p class="tip">Très largement moins cher qu'un taxi (300–500 THB + suppléments aéroport), pour un temps de trajet souvent comparable aux heures de pointe.</p>
+</div>
+
+</div>
+<p><small>Prix, horaires et liens à reconfirmer avant publication — les tarifs des transports publics thaïlandais évoluent régulièrement.</small></p>
+</section>
+
+<section id="hotels">
+<h2>Sélection d'hôtels</h2>
+<div class="grid">
+<div class="card"><h3>Économique</h3><p>Lub d Bangkok • ibis Styles Bangkok Silom • The Quarter.</p><p><strong>💰 environ 800–1 500 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Bangkok&nflt=class%3D2" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+<div class="card"><h3>Confort</h3><p>Amara Bangkok • Eastin Grand Phayathai • ASAI.</p><p><strong>💰 environ 1 500–3 000 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Bangkok&nflt=class%3D3" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+<div class="card"><h3>Premium</h3><p>Grande Centre Point Surawong • SO/ Bangkok.</p><p><strong>💰 environ 3 000–6 000 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Bangkok&nflt=class%3D4" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+<div class="card"><h3>Luxe</h3><p>Mandarin Oriental • Capella • The Peninsula.</p><p><strong>💰 à partir de 8 000 THB/nuit</strong></p><p><a class="btn" style="padding:10px 20px;font-size:14px" href="https://www.booking.com/searchresults.html?ss=Bangkok&nflt=class%3D5" target="_blank" rel="noopener">Voir sur Booking.com</a></p></div>
+</div>
+<p><small>Prix à titre indicatif, à confirmer au moment de la réservation.</small></p>
+</section>
+
+<section id="budget">
+<h2>Budget type par jour</h2>
+<div class="grid">
+<div class="card"><h3>🎒 Petit budget — environ 1 200–1 800 THB/jour</h3><p>Hôtel économique, street food (Thipsamai, Nai Ek), transport en BTS/MRT, un temple par jour.</p></div>
+<div class="card"><h3>🧳 Budget moyen — environ 2 500–4 000 THB/jour</h3><p>Hôtel confort, un restaurant gastronomique ou un rooftop dans la journée, Grab occasionnel, entrées aux sites inclus.</p></div>
+<div class="card"><h3>💼 Budget élevé — à partir de 6 000 THB/jour</h3><p>Hôtel premium/luxe, rooftop et gastronomie réguliers, Grab/taxi pour tous les trajets, activités et excursions.</p></div>
+</div>
+<p><small>Estimations pour une personne, hors billet d'avion. Le taux de change THB/EUR varie — à vérifier avant de partir.</small></p>
+</section>
+
+<section id="manger">
+<h2>Restaurants & Street Food</h2>
+<div class="toolbar" id="restToolbar">
+<button data-cat="all" class="active">Tous</button>
+<button data-cat="street">Street Food</button>
+<button data-cat="gastro">Gastronomique</button>
+<button data-cat="rooftop">Rooftop</button>
+<button data-cat="cafe">Café</button>
+</div>
+<div id="restGrid" class="rest-grid"></div>
+</section>
+
+<section id="carte">
+<h2>Carte interactive des restaurants</h2>
+<p>Marqueurs colorés par catégorie, regroupement automatique au dézoom, itinéraire depuis votre position.</p>
+<div class="toolbar">
+<button data-mapcat="all" class="active">Tous</button>
+<button data-mapcat="street">Street Food</button>
+<button data-mapcat="gastro">Gastronomique</button>
+<button data-mapcat="rooftop">Rooftop</button>
+<button data-mapcat="cafe">Café</button>
+</div>
+<div id="leafletMap"></div>
+<p><small>Coordonnées GPS estimées pour les adresses sans station de métro indiquée — à vérifier avant publication.</small></p>
+</section>
+
+<section id="itineraire">
+<h2>Itinéraires recommandés</h2>
+<div class="timeline">
+<h3>2 jours</h3><p>Jour 1 : Grand Palace, Wat Pho, Wat Arun. Jour 2 : Siam, ICONSIAM, rooftop.</p>
+<h3>3 jours</h3><p>Ajoute Chinatown et une croisière sur le Chao Phraya.</p>
+<h3>5 jours</h3><p>Inclure Ari, Lumpini, marchés et cafés.</p>
+<h3>7 jours</h3><p>Découverte approfondie avec excursions urbaines et quartiers moins connus.</p>
+</div>
+</section>
+
+<section>
+<h2>Roadmap d'enrichissement</h2>
+<div class="grid">
+<div class="card"><h3>Phase 1</h3><p>Remplacer les photos Unsplash génériques par de vraies photos de chaque établissement (prises sur place ou fournies par les restaurants).</p></div>
+<div class="card"><h3>Phase 2</h3><p>Vérifier et affiner les coordonnées GPS estimées, brancher de vrais liens de réservation pour les restaurants (les hôtels ont désormais un lien Booking.com).</p></div>
+<div class="card"><h3>Phase 3</h3><p>Réutiliser cette structure pour Phuket, Krabi, Chiang Mai, Koh Samui et les autres destinations.</p></div>
+</div>
+</section>
+
+<footer>
+<h2>Thaï Malin</h2>
+<p>Bangkok Premium — fichier maître</p>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+<script>
+window.THAIMALIN_CONFIG = {
+  citySlug: "bangkok",
+  cityLabel: "Bangkok",
+  mapCenter: [13.7563, 100.5018],
+  mapZoom: 12,
+  locationField: "station",
+  locationIcon: "🚆"
+};
+</script>
+<script src="assets/app.js"></script>
+</body>
+</html>
